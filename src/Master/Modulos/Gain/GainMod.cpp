@@ -1,13 +1,13 @@
-#include "gain.h"
+#include "GainMod.h"
 
-Gain::Gain(float gain):
+GainMod::GainMod(float gain):
     Modulo(1,1),
     gain(gain)
 {
 
 }
 
-int Gain::processInput (ofSoundBuffer inputs)
+int GainMod::processInput (ofSoundBuffer inputs)
 {
     if (inputs.getNumChannels()!=2)
         return -1;
@@ -15,7 +15,7 @@ int Gain::processInput (ofSoundBuffer inputs)
     return true;
 
 }
-int Gain::processInput(int ninput, ofSoundBuffer input)
+int GainMod::processInput(int ninput, ofSoundBuffer input)
 {
     if (ninput!=0 || input.getNumChannels()!=2)
         return -1;

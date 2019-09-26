@@ -1,6 +1,6 @@
-#include "Mix.h"
+#include "MixerMod.h"
 
-Mix::Mix(int ninputs, bool ch_gain, bool crossfader):
+MixerMod::MixerMod(int ninputs, bool ch_gain, bool crossfader):
     ch_gain(ch_gain),
     crossfader(crossfader),
     Modulo(ninputs,1)
@@ -8,7 +8,7 @@ Mix::Mix(int ninputs, bool ch_gain, bool crossfader):
     ch_fader.assign(ninputs,0);
 }
 
-int Mix::processInput (ofSoundBuffer inputs)
+int MixerMod::processInput (ofSoundBuffer inputs)
 {
     if (inputs.getNumChannels()!=2*ninputs)
         return -1;
@@ -47,7 +47,7 @@ int Mix::processInput (ofSoundBuffer inputs)
 }
 
 
-int Mix::processInput (int ninput,ofSoundBuffer input)
+int MixerMod::processInput (int ninput,ofSoundBuffer input)
 {
     if(ninput>=ninputs || input.getNumChannels()!=2)
         return -1;

@@ -2,7 +2,7 @@
 #define MIXER_H
 #include "../modulo.h"
 
-class Mix : public Modulo
+class MixerMod : public Modulo
 {
     //Activacion de crossfader y de gain por canal
     bool crossfader, ch_gain;
@@ -16,7 +16,7 @@ class Mix : public Modulo
     //0 No canal
     std::vector <int> ch_fader;
 public:
-    Mix(int ninputs,bool ch_gain=0, bool crossfader=0);
+    MixerMod(int ninputs,bool ch_gain=0, bool crossfader=0);
     virtual int processInput (ofSoundBuffer inputs);
     virtual int processInput (int ninput,ofSoundBuffer input);
 };

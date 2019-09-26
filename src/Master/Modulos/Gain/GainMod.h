@@ -2,11 +2,11 @@
 #define GAIN_H
 #include "../modulo.h"
 
-class Gain: public Modulo
+class GainMod: public Modulo
 {
     float gain;
 public:
-    Gain(float gain);
+    GainMod(float gain);
     virtual int processInput (ofSoundBuffer inputs);
     virtual int processInput (int ninput,ofSoundBuffer input);
 

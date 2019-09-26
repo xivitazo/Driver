@@ -12,7 +12,8 @@
 //--------------------------------------------------------------
 void ofApp::createModules (Master* master)
 {
-    master->addModulo (new Gain (1.0));
+    master->addModulo (new GainMod (1.0));
+     master->addModulo (new MixerMod ());
 
     int conexion1[2]={-1,0}, conexion2[2]={0,0}, conexion3[2]={-2,0};
 
