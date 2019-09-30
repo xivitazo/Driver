@@ -1,9 +1,9 @@
 #ifndef POTENCIOMETRO_H
 #define POTENCIOMETRO_H
-#include "Modulo.h"
+#include "MatrixMod.h"
 
 
-class Potenciometro: public Modulo
+class Potenciometro: public MatrixMod
 {
     float valor;
 public:

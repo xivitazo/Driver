@@ -1,14 +1,13 @@
 #ifndef GAIN_H
 #define GAIN_H
-#include "../modulo.h"
+#include "../AudioMod.h"
 
-class GainMod: public Modulo
+class GainMod: public AudioMod
 {
     float gain;
+    virtual void process();
 public:
     GainMod(float gain);
-    virtual int processInput (ofSoundBuffer inputs);
-    virtual int processInput (int ninput,ofSoundBuffer input);
 
 };
 

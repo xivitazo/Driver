@@ -1,6 +1,6 @@
 #include <Filters.h>
 
-const float filterFrequency = 15.0 ;
+const float filterFrequency = 3.0 ;
 const float pi = 3.14159265358979323846;
 const int diff = 5;
 const int lowestPin = 2;

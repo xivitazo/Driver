@@ -1,6 +1,6 @@
 #ifndef MATRIZ_H
 #define MATRIZ_H
-#include "Modulo.h"
+#include "MatrixMod.h"
 #include <vector>
 #include <thread>
 #include "ofSerial.h"
@@ -8,8 +8,7 @@
 
 class Matriz
 {
-   pthread_mutex_t mtx;
-   std::vector <Modulo*> modulos;
+   std::vector <MatrixMod*> modulos;
    ofSerial serial;
    int addModule(int pos[2], char* message);
 public:

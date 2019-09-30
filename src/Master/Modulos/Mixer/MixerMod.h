@@ -1,9 +1,12 @@
 #ifndef MIXER_H
 #define MIXER_H
-#include "../modulo.h"
+#include "../AudioMod.h"
 
-class MixerMod : public Modulo
+class MixerMod : public AudioMod
 {
+
+    virtual void process();
+
     //Activacion de crossfader y de gain por canal
     bool crossfader, ch_gain;
     //Gain de cada canal independiente
@@ -17,8 +20,6 @@ class MixerMod : public Modulo
     std::vector <int> ch_fader;
 public:
     MixerMod(int ninputs,bool ch_gain=0, bool crossfader=0);
-    virtual int processInput (ofSoundBuffer inputs);
-    virtual int processInput (int ninput,ofSoundBuffer input);
 };
 
 #endif // MIXER_H

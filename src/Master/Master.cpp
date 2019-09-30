@@ -40,12 +40,6 @@ int Master::processInput (ofSoundBuffer input)
         inputs[n]->setChannel(right,1);
     }
 
-    //Resetamos los buffers de los módulos
-    for(int n=0;n<modulos.size();n++)
-    {
-        modulos[n]->resetBuff(input.size());
-    }
-
     //procesamos el audio de módulo a módulo empezando por las entradas
     //outbuff.assign(modulos.size(),0);
 
@@ -184,7 +178,7 @@ bool Master::isOutReady()
     return true;
 }
 
-int Master::addModulo (Modulo *modulo)
+int Master::addModulo (AudioMod *modulo)
 {
     modulos.push_back(modulo);
     return modulos.size()-1;

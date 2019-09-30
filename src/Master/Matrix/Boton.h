@@ -1,9 +1,9 @@
 #ifndef BOTON_H
 #define BOTON_H
-#include "Modulo.h"
+#include "MatrixMod.h"
 
 
-class Boton: public Modulo
+class Boton: public MatrixMod
 {
 public:
     Boton(int posicion[2], bool bot);

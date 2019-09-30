@@ -4,28 +4,28 @@
 
 Matriz::Matriz(char* port, int baud)
 {
-    pthread_mutex_init(&mtx, NULL);
-    pthread_mutex_lock(&mtx);
+    //pthread_mutex_init(&mtx, NULL);
+    //pthread_mutex_lock(&mtx);
     ofSerialDeviceInfo device;
 
     serial.listDevices();
     serial.setup(port,baud);
-    pthread_mutex_unlock(&mtx);
+    //pthread_mutex_unlock(&mtx);
 
 }
 Matriz::Matriz()
 {
-    pthread_mutex_init(&mtx, NULL);
+    //pthread_mutex_init(&mtx, NULL);
 }
 void Matriz::setup(char *port, int baud)
 {
 
-    pthread_mutex_lock(&mtx);
+    //pthread_mutex_lock(&mtx);
     ofSerialDeviceInfo device;
 
     serial.listDevices();
     serial.setup(port,baud);
-    pthread_mutex_unlock(&mtx);
+    //pthread_mutex_unlock(&mtx);
 }
 
 int Matriz::addModule(int pos[], char *message)
@@ -60,7 +60,7 @@ int Matriz::addModule(int pos[], char *message)
 
 void Matriz::readSerial()
 {
-    pthread_mutex_lock(&mtx);
+    //pthread_mutex_lock(&mtx);
     int nread=0;
     int x,y;
     char bytes_serial[256], *info_mod;
@@ -81,12 +81,12 @@ void Matriz::readSerial()
             }
         }
     }
-    pthread_mutex_unlock(&mtx);
+    //pthread_mutex_unlock(&mtx);
 }
 
 void Matriz::writeSerial()
 {
-    pthread_mutex_lock(&mtx);
+    //pthread_mutex_lock(&mtx);
    char* message;
    for (int n=0; n<modulos.size();n++)
    {
@@ -94,10 +94,10 @@ void Matriz::writeSerial()
    }
    if (message[0]=='\0')
    {
-       pthread_mutex_unlock(&mtx);
+       //pthread_mutex_unlock(&mtx);
        return;
    }
    serial.writeBytes(message, sizeof(message));
-   pthread_mutex_unlock(&mtx);
+   //pthread_mutex_unlock(&mtx);
 
 }
