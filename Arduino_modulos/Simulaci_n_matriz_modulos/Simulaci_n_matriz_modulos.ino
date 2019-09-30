@@ -7,17 +7,19 @@ const int lowestPin = 2;
 const int highestPin = 15;
 
 
+
 typedef struct
 {
   int pos[2];
   int  varLP, varLP_new;
   FilterOnePole lowpass;
   int diff_new;
-
+  bool flag;
   void setup()
   {
       varLP=0;
       varLP_new=0;
+      diff_new=0;
       lowpass.setFilter(LOWPASS, 1/(2*pi/filterFrequency),0.0);
   }
   
@@ -29,7 +31,10 @@ typedef struct
     if (diff_new>diff)
     {
       varLP=varLP_new;
-      printValue();
+      //printValue();
+      flag=true;
+    }else{
+      flag=false;
     }
   }
   void printValue()
@@ -41,8 +46,10 @@ typedef struct
     Serial.println(varLP);
   }
 }modulo;
-modulo modulos[highestPin+1];
 
+modulo modulos[highestPin+1];
+String data;
+bool runs;
 
 /*void procesar (int pin)
 {
@@ -55,7 +62,6 @@ modulo modulos[highestPin+1];
     modulos[pin].varLP=modulos[pin].varLP_new;
   }
 }*/
-
 void inicializarPosiciones()
 {
   modulos[2].pos[0] = 4;
@@ -91,24 +97,35 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
   for (int thisPin = lowestPin; thisPin <= highestPin; thisPin++) {
-   
     modulos[thisPin].setup();
-    pinMode(thisPin, INPUT);
-    //modulos[thisPin].lowpass.test();
-   
+    pinMode(thisPin, INPUT);   
   }
   inicializarPosiciones();
-  /*for (int i=lowestPin; i<highestPin+1; i++)
-    {
-      if (i==4)
-        continue;
-      modulos[i].procesar();
-    }*/
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   int var;
+  data;
+  if (Serial.available()) {
+      data = Serial.readStringUntil('\n');
+      if(data=="Start"||data=="start"){
+        runs=true;
+      }else if(data=="Stop"||data=="stop"){
+        runs=false;
+      }else if(data=="Reset"||data=="reset"){
+        runs=false;
+        for (int thisPin = lowestPin; thisPin <= highestPin; thisPin++) {
+          modulos[thisPin].varLP=0;
+          modulos[thisPin].varLP_new=0;
+          modulos[thisPin].diff_new=0;
+        }
+      }else{
+        Serial.println("Unknown Command");
+      }
+        
+   }
+  if(runs=true){
     for (int i=lowestPin; i<highestPin+1; i++)
     {
       if (i==4){
@@ -116,8 +133,9 @@ void loop() {
       }
       var=analogRead(i);
       modulos[i].procesar(var);
-      //modulos[i].lowpass.print();
-      //delay (10);
     }
+  }
+   
+    
     
 }
