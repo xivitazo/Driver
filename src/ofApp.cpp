@@ -13,7 +13,7 @@
 void ofApp::createModules (Master* master)
 {
     master->addModulo (new GainMod (1.0));
-     master->addModulo (new MixerMod ());
+    // master->addModulo (new MixerMod ());
 
     int conexion1[2]={-1,0}, conexion2[2]={0,0}, conexion3[2]={-2,0};
 
@@ -26,14 +26,19 @@ void ofApp::createModules (Master* master)
 void ofApp::setup(){
 
     //soundcardIN = "MAYA44";
-    soundcardIN = "default";
-    soundcardOUT="default";
-    nInput = 2;
+
+    soundcardIN = "micr";
+    soundcardOUT="altavo";
+    nInput = 1;
     nOutput = 2;
 
     soundStream.printDeviceList();
 
     ofSoundStreamSettings settings;
+
+
+    //Inicializacion de Audio para Linux mediante nombre
+
     auto device1 = soundStream.getMatchingDevices(soundcardIN);
     auto device2 = soundStream.getMatchingDevices(soundcardOUT);
 
@@ -49,6 +54,12 @@ void ofApp::setup(){
     settings.numInputChannels = nInput;
     int bufferSize = soundStream.getBufferSize();
      //mixer = new Mixer(nInput/2, nOutput/2, 44100,bufferSize);
+
+
+    auto devices = soundStream.getDeviceList();
+    //settings.device = devices[4];
+    settings.setInDevice(devices[0]);
+    settings.setOutDevice(devices[0]);
 
 
     master=new Master (nInput/2,nOutput/2);

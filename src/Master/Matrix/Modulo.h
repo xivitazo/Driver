@@ -10,10 +10,11 @@ using namespace std;
 
 class Modulo
 {
+protected:
     int posicion [2];
     Tipo_Modulo tipo;
-public:
     Modulo(int pos[2], Tipo_Modulo tp);
+public:
     void getPos(int *pos[]);
     virtual void serial_in (char ** mensaje){}
     virtual void serial_out(char ** mensaje){}

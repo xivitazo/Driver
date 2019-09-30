@@ -9,27 +9,36 @@ const int highestPin = 15;
 
 typedef struct
 {
-  int pos[2], pin;
-  int var, varLP, varLP_new;
+  int pos[2];
+  int  varLP, varLP_new;
   FilterOnePole lowpass;
-  void procesar ()
+  int diff_new;
+
+  void setup()
   {
-    var=analogRead(pin);
+      varLP=0;
+      varLP_new=0;
+      lowpass.setFilter(LOWPASS, 1/(2*pi/filterFrequency),0.0);
+  }
+  
+  void procesar (int var)
+  {
     lowpass.input(var);
     varLP_new=lowpass.output();
-    if (varLP_new - varLP>=diff || varLP_new-varLP<=-diff)
+     diff_new=abs(varLP_new - varLP);
+    if (diff_new>diff)
     {
-      printValue();
       varLP=varLP_new;
+      printValue();
     }
   }
   void printValue()
   {
-    Serial.print(pos[1]);
+    Serial.print(pos[0]);
     Serial.print(" ");
-    Serial.print(pos[2]);
+    Serial.print(pos[1]);
     Serial.print(",");
-    Serial.println(varLP_new);
+    Serial.println(varLP);
   }
 }modulo;
 modulo modulos[highestPin+1];
@@ -49,45 +58,44 @@ modulo modulos[highestPin+1];
 
 void inicializarPosiciones()
 {
-  modulos[2].pos[1] = 4;
-  modulos[2].pos[2]=6;
-  modulos[3].pos[1] = 4;
-  modulos[3].pos[2] = 5;
+  modulos[2].pos[0] = 4;
+  modulos[2].pos[1]=6;
+  modulos[3].pos[0] = 4;
+  modulos[3].pos[1] = 5;
   //modulos[4].pos = {};
-  modulos[5].pos[1] = 3;
-  modulos[5].pos[2] = 6;
-  modulos[6].pos[1] = 3;
-  modulos[6].pos[2] = 5;
-  modulos[7].pos[1] = 3;
-  modulos[7].pos[2] = 4;
+  modulos[5].pos[0] = 3;
+  modulos[5].pos[1] = 6;
+  modulos[6].pos[0] = 3;
+  modulos[6].pos[1] = 5;
+  modulos[7].pos[0] = 3;
+  modulos[7].pos[1] = 4;
+  modulos[8].pos[0] = 3;
   modulos[8].pos[1] = 3;
-  modulos[8].pos[2] = 3;
-  modulos[9].pos[1] = 3;
-  modulos[9].pos[2] = 2;
-  modulos[10].pos[1] = 2;
-  modulos[10].pos[2] = 1;
-  modulos[11].pos[1] = 1;
-  modulos[11].pos[2] = 2;
-  modulos[12].pos[1] = 1;
-  modulos[12].pos[2] = 3;
-  modulos[13].pos[1] = 1;
-  modulos[13].pos[2] = 4;
-  modulos[14].pos[1] = 1;
-  modulos[14].pos[2] = 5;
-  modulos[15].pos[1] = 1;
-  modulos[15].pos[2] = 6;
+  modulos[9].pos[0] = 3;
+  modulos[9].pos[1] = 2;
+  modulos[10].pos[0] = 2;
+  modulos[10].pos[1] = 1;
+  modulos[11].pos[0] = 1;
+  modulos[11].pos[1] = 2;
+  modulos[12].pos[0] = 1;
+  modulos[12].pos[1] = 3;
+  modulos[13].pos[0] = 1;
+  modulos[13].pos[1] = 4;
+  modulos[14].pos[0] = 1;
+  modulos[14].pos[1] = 5;
+  modulos[15].pos[0] = 1;
+  modulos[15].pos[1] = 6;
 }
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
   for (int thisPin = lowestPin; thisPin <= highestPin; thisPin++) {
-    modulos[thisPin].var=0;
-    modulos[thisPin].varLP=0;
-    modulos[thisPin].varLP_new=0;
-    modulos[thisPin].pin=thisPin;
-    modulos[thisPin].lowpass.setFilter(LOWPASS, 1/(2*pi/filterFrequency),0.0);
+   
+    modulos[thisPin].setup();
     pinMode(thisPin, INPUT);
+    //modulos[thisPin].lowpass.test();
+   
   }
   inicializarPosiciones();
   /*for (int i=lowestPin; i<highestPin+1; i++)
@@ -100,11 +108,16 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  int var;
     for (int i=lowestPin; i<highestPin+1; i++)
     {
-      if (i==4)
+      if (i==4){
         continue;
-      modulos[i].procesar();
+      }
+      var=analogRead(i);
+      modulos[i].procesar(var);
+      //modulos[i].lowpass.print();
+      //delay (10);
     }
-    delay (10);
+    
 }

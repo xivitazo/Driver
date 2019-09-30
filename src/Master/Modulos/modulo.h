@@ -11,8 +11,8 @@ protected:
     //std::vector <int [2]> next;
     std::vector <bool> ready;
     const int ninputs, noutputs;
-public:
     Modulo(int ninputs, int noutputs);
+public:
     //Procesa todas las entradas guardadas en el buffer que tendra que tener el tamaño adecuado
     //-1 error
     //0 procesado correctamente pero módulo no listo para output
