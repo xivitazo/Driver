@@ -18,12 +18,14 @@ class Master
     bool conexionesListas();
 
 
+
+
 public:
     bool isOutReady();
     Master(int ninputs, int noutputs);
     ~Master();
     void update();
-    int processInput(ofSoundBuffer input);
+    int processInput(ofSoundBuffer & input);
     int getOutput(ofSoundBuffer& output);
     int addModulo (AudioMod *modulo);
     int addConexion(int input[2], int output[2]);

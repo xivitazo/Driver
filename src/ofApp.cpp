@@ -13,13 +13,22 @@
 void ofApp::createModules (Master* master)
 {
     master->addModulo (new GainMod (1.0));
-    // master->addModulo (new MixerMod ());
+    master->addModulo (new GainMod (1.0));
+    master->addModulo (new MixerMod (2));
 
-    int conexion1[2]={-1,0}, conexion2[2]={0,0}, conexion3[2]={-2,0};
+    //int conexion1[2]={-1,0}, conexion2[2]={0,0}, conexion3[2]={-2,0};
 
-    master->addConexion(conexion1, conexion2);
-    master->addConexion(conexion2, conexion3);
+    int entrada0[2]={-1,0}, entrada1[2]={-1,1};
+    int salida0[2]={-2,0}, salida1[2]={-2,1};
+    int modulo0_0[2]={0,0}, modulo1_0[2]={1,0};
+    int modulo2_0[2]={2,0}, modulo2_1[2]={2,1};
 
+    master->addConexion(entrada0, modulo0_0);
+    master->addConexion(modulo0_0,modulo2_0);
+    master->addConexion(entrada1, modulo1_0);
+    master->addConexion(modulo1_0,modulo2_1);
+    master->addConexion(modulo2_0, salida0);
+    master->addConexion(modulo2_0, salida1);
 }
 
 //--------------------------------------------------------------
@@ -27,10 +36,10 @@ void ofApp::setup(){
 
     //soundcardIN = "MAYA44";
 
-    soundcardIN = "micr";
-    soundcardOUT="altavo";
-    nInput = 1;
-    nOutput = 2;
+    soundcardIN = "MAYA44";
+    soundcardOUT="MAYA44";
+    nInput = 4;
+    nOutput = 4;
 
     soundStream.printDeviceList();
 
@@ -48,18 +57,18 @@ void ofApp::setup(){
     if (!device2.empty()){
         settings.setOutDevice(device2[0]);
     }
-    settings.setInListener(this);
-    settings.setOutListener(this);
     settings.numOutputChannels = nOutput;
     settings.numInputChannels = nInput;
+    settings.setInListener(this);
+    settings.setOutListener(this);
     int bufferSize = soundStream.getBufferSize();
      //mixer = new Mixer(nInput/2, nOutput/2, 44100,bufferSize);
 
 
-    auto devices = soundStream.getDeviceList();
+   // auto devices = soundStream.getDeviceList();
     //settings.device = devices[4];
-    settings.setInDevice(devices[0]);
-    settings.setOutDevice(devices[0]);
+   /* settings.setInDevice(devices[0]);
+    settings.setOutDevice(devices[0]);*/
 
 
     master=new Master (nInput/2,nOutput/2);

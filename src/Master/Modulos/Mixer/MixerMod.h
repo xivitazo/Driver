@@ -1,11 +1,12 @@
-#ifndef MIXER_H
-#define MIXER_H
+#ifndef MIXERMOD_H
+#define MIXERMOD_H
 #include "../AudioMod.h"
 
 class MixerMod : public AudioMod
 {
 
     virtual void process();
+    virtual void update(int nlink, float val);
 
     //Activacion de crossfader y de gain por canal
     bool crossfader, ch_gain;
@@ -22,4 +23,4 @@ public:
     MixerMod(int ninputs,bool ch_gain=0, bool crossfader=0);
 };
 
-#endif // MIXER_H
+#endif // MIXERMOD_H
