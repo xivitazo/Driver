@@ -35,6 +35,7 @@ class ofApp : public ofBaseApp{
         Master* master;
 
         void createModules (Master* master);
+        void createLinks(Master* master);
 
 
 		int nOutput, nInput;

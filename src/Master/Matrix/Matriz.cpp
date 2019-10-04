@@ -8,7 +8,7 @@ Matriz::Matriz(char* port, int baud)
     //pthread_mutex_lock(&mtx);
     ofSerialDeviceInfo device;
 
-    serial.listDevices();
+    //serial.listDevices();
     serial.setup(port,baud);
     //pthread_mutex_unlock(&mtx);
 
@@ -58,7 +58,7 @@ int Matriz::addModule(int pos[], char *message)
 }
 
 
-void Matriz::readSerial()
+void Matriz::update()
 {
     //pthread_mutex_lock(&mtx);
     int nread=0;
@@ -66,25 +66,42 @@ void Matriz::readSerial()
     char bytes_serial[256], *info_mod;
     while ((nread=serial.readBytes(bytes_serial,256))>0)
     {
-        while((sscanf(bytes_serial,"%d %d %s\n",&x, &y,info_mod))>0)
+        sscanf(bytes_serial,"%d %d ,%s\n",&x, &y,info_mod);
+        while(info_mod != "\0")
         {
-            for (int n=0; n<modulos.size();n++)
+            int n;
+            int *pos[2];
+            for (n=0; n<modulos.size();n++)
             {
-                int *pos[2];
                 modulos[n]->getPos(pos);
                 if (*pos[1]==x && *pos[2]==y)
                 {
                     modulos[n]->serial_in(&info_mod);
-                    continue;
+                    break;
                 }
-                addModule(*pos, info_mod);
             }
+            if(n>=modulos.size())
+                addModule(*pos, info_mod);
         }
     }
     //pthread_mutex_unlock(&mtx);
 }
 
-void Matriz::writeSerial()
+int Matriz::addLink(int pos[], AudioMod *Link, int nAudlink, int nMatrlink)
+{
+    for (int n=0;n<modulos.size();n++)
+    {
+        int *npos;
+        modulos[n]->getPos(&npos);
+        if (npos[0]==pos[0] && npos[1]==pos[1])
+        {
+            return modulos[n]->addInputLink(Link, nAudlink, nMatrlink);
+        }
+    }
+    return -1;
+}
+
+/*void Matriz::writeSerial()
 {
     //pthread_mutex_lock(&mtx);
    char* message;
@@ -100,4 +117,4 @@ void Matriz::writeSerial()
    serial.writeBytes(message, sizeof(message));
    //pthread_mutex_unlock(&mtx);
 
-}
+}*/

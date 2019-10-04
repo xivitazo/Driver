@@ -14,28 +14,7 @@ AudioMod::AudioMod(int ninputs, int noutputs, int nlinks):
 
     pthread_mutex_unlock(&mtx);
 }
-/*
-int Modulo::setNext(std::vector<int[2]> next)
-{
-    if (next.size() != noutputs)
-        return -1;
-    for (int n=0; n<next.size();n++)
-    {
-        this->next[n][0]=next[n][0];
-        this->next[n][1]=next[n][1];
-    }
-    return true;
-}
 
-int Modulo::setNext(int next[], int noutput)
-{
-    if(noutput>=noutputs)
-        return -1;
-    this->next[noutput][0]=next[0];
-    this->next[noutput][1]=next[1];
-    return true;
-}
-*/
 int AudioMod::getOutput(ofSoundBuffer& output)
 {
     if (!isOutReady())
@@ -123,6 +102,7 @@ void AudioMod::resetBuff(int numSamples)
     outputs.allocate(numSamples, 2*noutputs);
     outputs.set(0);
     inputs.allocate(numSamples,2*ninputs);
+
     inputs.set(0);
     input_lock.assign(ninputs,NULL);
 }

@@ -31,6 +31,14 @@ void ofApp::createModules (Master* master)
     master->addConexion(modulo2_0, salida1);
 }
 
+void ofApp::createLinks(Master* master)
+{
+    int pos[2]={1,6};
+    AudioMod* audio;
+    master->getModulo(0,audio);
+    master->addLink(pos,audio,0,0);
+}
+
 //--------------------------------------------------------------
 void ofApp::setup(){
 
@@ -73,6 +81,7 @@ void ofApp::setup(){
 
     master=new Master (nInput/2,nOutput/2);
     createModules(master);
+    createLinks(master);
      //int fd;
      /*fd=open("var/Mixer.txt", O_RDWR, 0777);
      ftruncate(fd,sizeof(Mixer));

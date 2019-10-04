@@ -38,6 +38,7 @@ public:
     int getNoutputs(){return noutputs;}
     int getNinputs(){return ninputs;}
     void resetBuff(int numSamples);
+    int getNLinks(){return nlinks;}
 };
 
 #endif // AUDIOMOD_H

@@ -11,14 +11,13 @@ class Master
     //Los módulos empiezan a partir del 2, el 0 son las entradas y el 1 las salidas
     std::vector <AudioMod *> modulos;
     ofSoundBuffer output;
-    Matriz matriz;
     //std::vector <int [2] > inputlink;
 
     std::vector <Conexion *> conexiones;
     bool conexionesListas();
 
 
-
+    Matriz* matriz;
 
 public:
     bool isOutReady();
@@ -29,6 +28,8 @@ public:
     int getOutput(ofSoundBuffer& output);
     int addModulo (AudioMod *modulo);
     int addConexion(int input[2], int output[2]);
+    int addLink(int pos[], AudioMod *link, int nAudlink, int nMatrlink);
+    int getModulo(int pos, AudioMod* Mod);
 };
 
 #endif // MIXER_H

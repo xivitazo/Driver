@@ -22,10 +22,10 @@ protected:
     std::vector<Link *> outputLinks;
 public:
     void getPos(int *pos[]);
-    virtual void serial_in (char ** mensaje){}
-    virtual void serial_out(char ** mensaje){}
-    int addInputLink (AudioMod Mod, int nAudLink, int nMatrLink);
-    int addOutputLink (AudioMod Mod, int nAudLink, int nMatrLink);
+    virtual void serial_in (char ** mensaje);
+    //virtual void serial_out(char ** mensaje);
+    int addInputLink (AudioMod* Mod, int nAudLink, int nMatrLink);
+    //int addOutputLink (AudioMod* Mod, int nAudLink, int nMatrLink);
 };
 
 #endif // MATRIXMOD_H

@@ -4,7 +4,11 @@ Master::Master(int ninputs, int noutputs):
     ninputs(ninputs),
     noutputs(noutputs)
 {
+    int baud=115200;
+    char port[256]="/dev/ttyACM0";
+    matriz=new Matriz(port, baud);
     output.setNumChannels(2*noutputs);
+    update();
 }
 
  Master::~Master()
@@ -15,6 +19,24 @@ Master::Master(int ninputs, int noutputs):
          delete conexiones[n];
  }
 
+
+ void Master::update()
+ {
+     matriz->update();
+ }
+
+ int Master::addLink(int pos[], AudioMod *link, int nAudlink, int nMatrlink)
+ {
+    return matriz->addLink(pos,link,nAudlink, nMatrlink);
+ }
+
+int Master::getModulo(int pos, AudioMod* Mod)
+{
+    if (pos>=modulos.size())
+        return -1;
+    Mod=modulos[pos];
+    return true;
+}
 
  int Master::getOutput(ofSoundBuffer &output)
  {

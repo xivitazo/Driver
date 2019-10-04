@@ -15,8 +15,9 @@ public:
     Matriz(char* port, int baud);
     Matriz();
     void setup (char* port, int baud);
-    void readSerial();
-    void writeSerial();
+    void update();
+    int addLink(int pos[], AudioMod *Link, int nAudlink, int nMatrlink);
+    //void writeSerial();
 };
 
 #endif // MATRIZ_H
