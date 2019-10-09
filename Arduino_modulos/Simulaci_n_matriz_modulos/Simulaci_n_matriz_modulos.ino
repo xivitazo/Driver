@@ -1,34 +1,36 @@
 #include <Filters.h>
+#include <PID_v1.h>
 
-const float filterFrequency = 3.0 ;
+const float filterFrequency = 1.0 ;
 const float pi = 3.14159265358979323846;
 const int diff = 5;
 const int lowestPin = 2;
 const int highestPin = 15;
+double kp=2;
+double ki=4;
+double kd=4;
 
 
-typedef struct
+
+class Modulo
 {
-  int pos[2];
-  int  varLP, varLP_new;
-  FilterOnePole lowpass;
-  int diff_new;
-
-  void setup()
+  public:
+  Modulo():
+  miPID(&in, &out, &out_new, kp, ki, kd, DIRECT)
   {
-      varLP=0;
-      varLP_new=0;
-      lowpass.setFilter(LOWPASS, 1/(2*pi/filterFrequency),0.0);
+      miPID.SetMode(AUTOMATIC);
   }
-  
-  void procesar (int var)
+  int pos[2];
+ double in, out;
+ double out_new=0;
+ PID miPID;
+  void procesar (double val)
   {
-    lowpass.input(var);
-    varLP_new=lowpass.output();
-     diff_new=abs(varLP_new - varLP);
-    if (diff_new>diff)
+    in=val-out_new;
+    miPID.Compute();
+    if(abs(out-out_new)>diff)
     {
-      varLP=varLP_new;
+      out_new=out;
       printValue();
     }
   }
@@ -38,10 +40,12 @@ typedef struct
     Serial.print(" ");
     Serial.print(pos[1]);
     Serial.print(",");
-    Serial.println(varLP);
+    Serial.println(out);
   }
-}modulo;
-modulo modulos[highestPin+1];
+};
+
+
+Modulo modulos[highestPin+1];
 
 
 /*void procesar (int pin)
@@ -92,12 +96,14 @@ void setup() {
   Serial.begin(115200);
   for (int thisPin = lowestPin; thisPin <= highestPin; thisPin++) {
    
-    modulos[thisPin].setup();
+    //modulos[thisPin].setup();
     pinMode(thisPin, INPUT);
     //modulos[thisPin].lowpass.test();
    
   }
   inicializarPosiciones();
+  //delay(1500);
+  
   /*for (int i=lowestPin; i<highestPin+1; i++)
     {
       if (i==4)
@@ -108,7 +114,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  int var;
+  double var;
     for (int i=lowestPin; i<highestPin+1; i++)
     {
       if (i==4){

@@ -11,6 +11,10 @@ Matriz::Matriz(char* port, int baud)
     //serial.listDevices();
     serial.setup(port,baud);
     //pthread_mutex_unlock(&mtx);
+    char prueba[128];
+    serial.readBytes(prueba, 128);
+    serial.close();
+    serial.setup(port, baud);
 
 }
 Matriz::Matriz()
@@ -66,7 +70,7 @@ void Matriz::update()
     char bytes_serial[256], *info_mod;
     while ((nread=serial.readBytes(bytes_serial,256))>0)
     {
-        sscanf(bytes_serial,"%d %d ,%s\n",&x, &y,info_mod);
+        sscanf(bytes_serial,"%d %d ,%s",&x, &y,info_mod);
         while(info_mod != "\0")
         {
             int n;
@@ -81,7 +85,10 @@ void Matriz::update()
                 }
             }
             if(n>=modulos.size())
+            {
                 addModule(*pos, info_mod);
+                break;
+            }
         }
     }
     //pthread_mutex_unlock(&mtx);
