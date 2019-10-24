@@ -3,7 +3,7 @@
 MixerMod::MixerMod(int ninputs, bool ch_gain, bool crossfader):
     ch_gain(ch_gain),
     crossfader(crossfader),
-    AudioMod(ninputs,1,ninputs*ch_gain+ninputs*crossfader)
+    AudioMod(ninputs,1,ninputs*ch_gain+ninputs*crossfader, 0)
 {
     ch_fader.assign(ninputs,0);
 }

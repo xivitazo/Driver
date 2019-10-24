@@ -4,6 +4,7 @@
 #include "Matrix/Matriz.h"
 #include "ofSoundBuffer.h"
 #include "conexion.h"
+#include "Link/LinkStack.h"
 
 class Master
 {
@@ -16,20 +17,29 @@ class Master
     std::vector <Conexion *> conexiones;
     bool conexionesListas();
 
+    LinkStack links;
+
 
     Matriz* matriz;
 
 public:
     bool isOutReady();
-    Master(int ninputs, int noutputs);
+    Master(int ninputs, int noutputs, string mat_port, int baud);
     ~Master();
     void update();
     int processInput(ofSoundBuffer & input);
     int getOutput(ofSoundBuffer& output);
     int addModulo (AudioMod *modulo);
     int addConexion(int input[2], int output[2]);
-    int addLink(int pos[], AudioMod *link, int nAudlink, int nMatrlink);
-    int getModulo(int pos, AudioMod* Mod);
+    AudioMod* getModulo(int pos);
+
+
+    int addLinkFromMatr(int x, int y, AudioMod *toLink, int nAudlink, int nMatrlink);
+    int addLinkFromAud(AudioMod* fromLink, int toPos[], int nAudLink, int nMatrLink);
+
+
+    void createLinks();
+    void createModules ();
 };
 
 #endif // MIXER_H

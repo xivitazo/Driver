@@ -7,6 +7,7 @@ class GainMod: public AudioMod
     float gain;
     virtual void process();
     virtual void update(int nlink, float val);
+    virtual void  in_link (int link, float value);
 public:
     GainMod(float gain);
 

@@ -12,12 +12,14 @@ Project{
         name: { return FileInfo.baseName(sourceDirectory) }
 
         files: [
+            "../src/Master/Link/Link.cpp",
+            "../src/Master/Link/Link.h",
+            "../src/Master/Link/LinkStack.cpp",
+            "../src/Master/Link/LinkStack.h",
             "../src/Master/Master.cpp",
             "../src/Master/Master.h",
             "../src/Master/Matrix/Boton.cpp",
             "../src/Master/Matrix/Boton.h",
-            "../src/Master/Matrix/Link.cpp",
-            "../src/Master/Matrix/Link.h",
             "../src/Master/Matrix/MatrixMod.cpp",
             "../src/Master/Matrix/MatrixMod.h",
             "../src/Master/Matrix/Matriz.cpp",

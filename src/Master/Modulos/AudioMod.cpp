@@ -1,9 +1,10 @@
 #include "AudioMod.h"
 
-AudioMod::AudioMod(int ninputs, int noutputs, int nlinks):
+AudioMod::AudioMod(int ninputs, int noutputs, int nInLinks, int nOutLinks):
     ninputs(ninputs),
     noutputs(noutputs),
-    nlinks(nlinks)
+    nInLinks(nInLinks),
+    nOutLinks(nOutLinks)
 {
     pthread_mutex_init(&mtx,NULL);
     pthread_mutex_lock(&mtx);
@@ -11,6 +12,7 @@ AudioMod::AudioMod(int ninputs, int noutputs, int nlinks):
     input_lock.assign(ninputs,NULL);
     outputs.resize(noutputs*2);
     inputs.resize(ninputs*2);
+    linkReady.assign(nOutLinks,1);
 
     pthread_mutex_unlock(&mtx);
 }
@@ -27,7 +29,7 @@ int AudioMod::getOutput(ofSoundBuffer& output)
 
 int AudioMod::getOutput(ofSoundBuffer &output, int noutput)
 {
-    if (noutput>=noutputs)
+    if (noutput>=noutputs || !isOutReady())
         return -1;
     pthread_mutex_lock(&mtx);
     ofSoundBuffer left, right;
@@ -43,9 +45,25 @@ int AudioMod::getOutput(ofSoundBuffer &output, int noutput)
 
 bool AudioMod::isOutReady()
 {
+    pthread_mutex_lock(&mtx);
     for (int n=0;n<ninputs;n++)
         if(input_lock[n]==0)
+        {
+            pthread_mutex_unlock(&mtx);
             return 0;
+        }
+    pthread_mutex_unlock(&mtx);
+    return 1;
+}
+
+bool AudioMod::noMtxOutReady()
+{
+    for (int n=0;n<ninputs;n++)
+        if(input_lock[n]==0)
+        {
+            pthread_mutex_unlock(&mtx);
+            return 0;
+        }
     return 1;
 }
 
@@ -83,7 +101,7 @@ int AudioMod::processInput(int ninput, ofSoundBuffer input)
    input.getChannel(right,1);
    inputs.setChannel(left, ninput*2);
    inputs.setChannel(right, ninput*2+1);
-   if(isOutReady())
+   if(noMtxOutReady())
    {
        process();
        pthread_mutex_unlock(&mtx);
@@ -99,22 +117,45 @@ int AudioMod::processInput(int ninput, ofSoundBuffer input)
 
 void AudioMod::resetBuff(int numSamples)
 {
+    pthread_mutex_lock(&mtx);
     outputs.allocate(numSamples, 2*noutputs);
     outputs.set(0);
     inputs.allocate(numSamples,2*ninputs);
 
     inputs.set(0);
     input_lock.assign(ninputs,NULL);
+    pthread_mutex_unlock(&mtx);
 }
 
 
 
-int AudioMod::update_link (int nlink, float val)
+int AudioMod::updateLink (int nlink, float val)
 {
-    if (nlink>=nlinks)
+    if (nlink>=nInLinks)
         return -1;
     pthread_mutex_lock(&mtx);
-    update(nlink,val);
+    in_link(nlink,val);
     pthread_mutex_unlock(&mtx);
     return true;
+}
+
+float AudioMod::getLink (int nlink)
+{
+    if (nlink >= nOutLinks)
+        return -1;
+    pthread_mutex_lock(&mtx);
+    float val= out_link(nlink);
+    linkReady[nlink]=0;
+    pthread_mutex_unlock(&mtx);
+    return val;
+}
+
+bool AudioMod::isLinkReady(int nlink)
+{
+    if (nlink>=nOutLinks)
+        return false;
+    pthread_mutex_lock(&mtx);
+    int val= linkReady[nlink];
+    pthread_mutex_unlock(&mtx);
+    return val;
 }

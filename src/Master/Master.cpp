@@ -1,14 +1,16 @@
 #include "Master.h"
+#include "Link/Link.h"
+#include "Modulos/AllAudioMod.h"
 
-Master::Master(int ninputs, int noutputs):
+Master::Master(int ninputs, int noutputs, string mat_port, int baud):
     ninputs(ninputs),
     noutputs(noutputs)
 {
-    int baud=115200;
-    char port[256]="/dev/ttyACM0";
-    matriz=new Matriz(port, baud);
     output.setNumChannels(2*noutputs);
-    update();
+    matriz=new Matriz(mat_port,baud, 4,6);
+    createModules();
+    createLinks();
+    links.update();
 }
 
  Master::~Master()
@@ -23,19 +25,34 @@ Master::Master(int ninputs, int noutputs):
  void Master::update()
  {
      matriz->update();
+     links.updateFromMatr();
  }
 
- int Master::addLink(int pos[], AudioMod *link, int nAudlink, int nMatrlink)
+ int Master::addLinkFromMatr(int x,int y, AudioMod *toLink, int nAudlink, int nMatrlink)
  {
-    return matriz->addLink(pos,link,nAudlink, nMatrlink);
+    //return matriz->addLink(pos,link,nAudlink, nMatrlink);
+     MatrixMod* mat_link = matriz->getModulo(x, y);
+     if (mat_link==0)
+         return -1;
+     links.addFromMatr(mat_link,nMatrlink,toLink,nAudlink);
+     return true;
  }
 
-int Master::getModulo(int pos, AudioMod* Mod)
+ int Master::addLinkFromAud(AudioMod* fromLink, int toPos[], int nAudLink, int nMatrLink)
+ {
+    //return matriz->addLink(pos,link,nAudlink, nMatrlink);
+     MatrixMod* mat_link = matriz->getModulo(toPos[0], toPos[1]);
+     if (mat_link==0)
+         return -1;
+     links.addFromAud(fromLink,nAudLink,mat_link,nMatrLink);
+     return true;
+ }
+
+AudioMod *Master::getModulo(int pos)
 {
     if (pos>=modulos.size())
-        return -1;
-    Mod=modulos[pos];
-    return true;
+        return 0;
+    return modulos[pos];
 }
 
  int Master::getOutput(ofSoundBuffer &output)
@@ -116,7 +133,6 @@ int Master::getModulo(int pos, AudioMod* Mod)
      }
 
 
-     int w=0;
 
      while(!isOutReady())
      {
@@ -157,9 +173,7 @@ int Master::getModulo(int pos, AudioMod* Mod)
                  }while(ok>0);
              }
          }
-         w++;
      }
-    w=0;
      /*for(int n=0;n<ninputs;n++)
     {
         std::vector <int [2]> next ;
@@ -191,6 +205,7 @@ int Master::getModulo(int pos, AudioMod* Mod)
      {
          delete inputs[n];
      }
+     links.updateFomAud();
      return true;
  }
 
@@ -230,4 +245,35 @@ int Master::addConexion(int input[2], int output[2])
         return -1;
     conexiones.push_back(new Conexion(input,output));
     return true;
+}
+
+
+void Master::createLinks()
+{
+    AudioMod* tolink =getModulo(0);
+    //MatrixMod* fromlink = matriz->getModulo(1,6);
+    int pos[2]={1,4};
+
+    addLinkFromMatr(pos[0], pos[1],tolink,0,0);
+}
+
+void Master::createModules ()
+{
+   addModulo (new GainMod (1.0));
+    addModulo (new GainMod (1.0));
+    addModulo (new MixerMod (2));
+
+    //int conexion1[2]={-1,0}, conexion2[2]={0,0}, conexion3[2]={-2,0};
+
+    int entrada0[2]={-1,0}, entrada1[2]={-1,1};
+    int salida0[2]={-2,0}, salida1[2]={-2,1};
+    int modulo0_0[2]={0,0}, modulo1_0[2]={1,0};
+    int modulo2_0[2]={2,0}, modulo2_1[2]={2,1};
+
+    addConexion(entrada0, modulo0_0);
+    addConexion(modulo0_0,modulo2_0);
+    addConexion(entrada1, modulo1_0);
+    addConexion(modulo1_0,modulo2_1);
+    addConexion(modulo2_0, salida0);
+    addConexion(modulo2_0, salida1);
 }

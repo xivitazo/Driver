@@ -30,6 +30,8 @@ class ofApp : public ofBaseApp{
 		void audioOut (ofSoundBuffer & output);
 	
 		string soundcardIN, soundcardOUT;
+        string mat_port;
+        int baud;
 
 
         Master* master;

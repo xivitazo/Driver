@@ -10,34 +10,9 @@
 
 
 //--------------------------------------------------------------
-void ofApp::createModules (Master* master)
-{
-    master->addModulo (new GainMod (1.0));
-    master->addModulo (new GainMod (1.0));
-    master->addModulo (new MixerMod (2));
 
-    //int conexion1[2]={-1,0}, conexion2[2]={0,0}, conexion3[2]={-2,0};
 
-    int entrada0[2]={-1,0}, entrada1[2]={-1,1};
-    int salida0[2]={-2,0}, salida1[2]={-2,1};
-    int modulo0_0[2]={0,0}, modulo1_0[2]={1,0};
-    int modulo2_0[2]={2,0}, modulo2_1[2]={2,1};
 
-    master->addConexion(entrada0, modulo0_0);
-    master->addConexion(modulo0_0,modulo2_0);
-    master->addConexion(entrada1, modulo1_0);
-    master->addConexion(modulo1_0,modulo2_1);
-    master->addConexion(modulo2_0, salida0);
-    master->addConexion(modulo2_0, salida1);
-}
-
-void ofApp::createLinks(Master* master)
-{
-    int pos[2]={1,6};
-    AudioMod* audio;
-    master->getModulo(0,audio);
-    master->addLink(pos,audio,0,0);
-}
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -48,6 +23,8 @@ void ofApp::setup(){
     soundcardOUT="MAYA44";
     nInput = 4;
     nOutput = 4;
+    mat_port="/dev/ttyACM0";
+    baud=115200;
 
     soundStream.printDeviceList();
 
@@ -79,9 +56,7 @@ void ofApp::setup(){
     settings.setOutDevice(devices[0]);*/
 
 
-    master=new Master (nInput/2,nOutput/2);
-    createModules(master);
-    createLinks(master);
+    master=new Master (nInput/2,nOutput/2, mat_port, baud);
      //int fd;
      /*fd=open("var/Mixer.txt", O_RDWR, 0777);
      ftruncate(fd,sizeof(Mixer));
@@ -97,7 +72,7 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+    master->update();
 }
 
 //--------------------------------------------------------------
