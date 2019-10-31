@@ -1,21 +1,12 @@
+
 #include "ofApp.h"
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <sys/mman.h> //para mmap
-#include <fstream> //para open
-#include <fcntl.h> //para O_RDWR
-#include "Master/Audio/Modulos/AllAudioMod.h"
-
-
+#include "Master.h"
 
 //--------------------------------------------------------------
-
-
-
-
 //--------------------------------------------------------------
-void ofApp::setup(){
+
+void ofApp::setup() {
+
 
     //soundcardIN = "MAYA44";
 
@@ -71,84 +62,115 @@ void ofApp::setup(){
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
+
+void ofApp::update() {
+
     master->update();
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
+
+void ofApp::draw() {
+
 	
 	
 		
 }
 
 //--------------------------------------------------------------
-void ofApp::audioIn(ofSoundBuffer & input){
+
+void ofApp::keyPressed(int key) {
+
+	
+}
+
+//--------------------------------------------------------------
+
+void ofApp::keyReleased(int key) {
+
+
+}
+
+//--------------------------------------------------------------
+
+void ofApp::mouseMoved(int x, int y) {
+
+}
+
+//--------------------------------------------------------------
+
+void ofApp::mouseDragged(int x, int y, int button) {
+
+}
+
+//--------------------------------------------------------------
+
+void ofApp::mousePressed(int x, int y, int button) {
+
+}
+
+//--------------------------------------------------------------
+
+void ofApp::mouseReleased(int x, int y, int button) {
+
+}
+
+//--------------------------------------------------------------
+
+void ofApp::mouseEntered(int x, int y) {
+
+
+}
+
+//--------------------------------------------------------------
+
+void ofApp::mouseExited(int x, int y) {
+
+
+}
+
+//--------------------------------------------------------------
+
+void ofApp::windowResized(int w, int h) {
+
+
+}
+
+//--------------------------------------------------------------
+
+void ofApp::dragEvent(ofDragInfo dragInfo) {
+ 
+
+}
+
+//--------------------------------------------------------------
+
+void ofApp::gotMessage(ofMessage msg) {
+
+
+}
+
+ofApp::~ofApp() {
+
+
+}
+
+//--------------------------------------------------------------
+
+void ofApp::audioIn(ofSoundBuffer & input) {
+
 
     master->processInput(input);
 	
 }
+
 //--------------------------------------------------------------
-void ofApp::audioOut(ofSoundBuffer & output){
+
+void ofApp::audioOut(ofSoundBuffer & output) {
+
 
 
     master->getOutput(output);
 	
-}
-
-
-//--------------------------------------------------------------
-void ofApp::keyPressed  (int key){
-	
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased  (int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-}
-
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
-}
-
-ofApp :: ~ofApp(){
-
 }
 

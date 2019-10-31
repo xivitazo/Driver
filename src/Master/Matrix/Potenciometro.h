@@ -1,18 +1,23 @@
-#ifndef POTENCIOMETRO_H
-#define POTENCIOMETRO_H
+#ifndef _POTENCIOMETRO_H
+#define _POTENCIOMETRO_H
+
+
 #include "MatrixMod.h"
 
-
-class Potenciometro: public MatrixMod
-{
+class Potenciometro : public MatrixMod {
+  private:
     float valor;
+
     //virtual float value(int link);
     virtual float out_link(int link);
-    virtual void  in_link (int link, float value);
+
+    virtual void in_link(int link, float value);
+
     virtual void serial_in(int link, float mensaje);
-public:
+
+
+  public:
     Potenciometro(int pos[], float val, Tipo_Modulo tipo);
 
 };
-
-#endif // POTENCIOMETRO_H
+#endif

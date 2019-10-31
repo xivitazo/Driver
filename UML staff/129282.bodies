@@ -1,19 +1,7 @@
+class Link
+!!!136322.cpp!!!	Link(inout audLink : AudioMod, in audNLink : int, inout matLink : MatrixMod, in matNLink : int, in fromAud : bool)
 
-#include "Link.h"
-#include "AudioMod.h"
-#include "MatrixMod.h"
-
-Link::Link(AudioMod * audLink, int audNLink, MatrixMod * matLink, int matNLink, bool fromAud):
-    audLink(audLink),
-    audNLink(audNLink),
-    matLink(matLink),
-    matNLink(matNLink),
-    fromAud(fromAud)
-{
-
-}
-
-void Link::update() {
+!!!136450.cpp!!!	update() : void
 
      if(!isLinkReady())
          return;
@@ -25,12 +13,8 @@ void Link::update() {
      }
      float val=matLink->getLink(matNLink);
      audLink->updateLink(audNLink, val);
-}
-
-bool Link::isLinkReady() {
+!!!136578.cpp!!!	isLinkReady() : bool
 
      if (fromAud)
          return audLink->isLinkReady(audNLink);
      return matLink->isLinkReady(matNLink);
-}
-

@@ -1,0 +1,11 @@
+class Potenciometro
+!!!139906.cpp!!!	out_link(in link : int) : float
+
+    return valor;
+
+!!!140034.cpp!!!	in_link(in link : int, in value : float) : void
+
+    valor=value;
+!!!140162.cpp!!!	serial_in(in link : int, in mensaje : float) : void
+
+    valor=mensaje;

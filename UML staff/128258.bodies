@@ -1,50 +1,33 @@
-
-#include "Master.h"
-#include "Audio.h"
-#include "Matriz.h"
-#include "AudioMod.h"
-
-Master::Master() {
+class Master
+!!!130434.cpp!!!	Master(in ninputs : int, in noutputs : int, in mat_port : string, in baud : int)
 
     audio=new Audio (ninputs,noutputs);
     matriz=new Matriz(mat_port,baud, 4,6);
     createModules();
     createLinks();
     links.update();
-}
-
-Master::~Master() {
+!!!130562.cpp!!!	~Master()
 
      delete matriz;
      delete audio;
-}
-
-void Master::update() {
+!!!130690.cpp!!!	update() : void
 
      matriz->update();
      links.updateFromMatr();
-}
-
-int Master::processInput() {
+!!!130818.cpp!!!	processInput(inout input : ofSoundBuffer) : int
 
      int out=audio->processInput(input);
      links.updateFomAud();
      return out;
-}
-
-int Master::getOutput() {
+!!!130946.cpp!!!	getOutput(inout output : ofSoundBuffer) : int
 
      if (audio->getOutput(output)==-1)
          return -1;
      return true;
-}
-
-int Master::addAudMod() {
+!!!131074.cpp!!!	addAudMod(inout modulo : AudioMod) : int
 
     return audio->addModulo( modulo);
-}
-
-int Master::addLinkFromMatr() {
+!!!131330.cpp!!!	addLinkFromMatr(in x : int, in y : int, in toLinkPos : int, in nAudlink : int, in nMatrlink : int) : int
 
     //return matriz->addLink(pos,link,nAudlink, nMatrlink);
      MatrixMod* mat_link = matriz->getModulo(x, y);
@@ -53,16 +36,12 @@ int Master::addLinkFromMatr() {
          return -1;
      links.addFromMatr(mat_link,nMatrlink,toLink,nAudlink);
      return true;
-}
-
-void Master::createLinks() {
+!!!131586.cpp!!!	createLinks() : void
 
     int pos[2]={1,4};
 
     addLinkFromMatr(pos[0], pos[1],0,0,0);
-}
-
-void Master::createModules() {
+!!!131714.cpp!!!	createModules() : void
 
     addAudMod (new GainMod (1.0));
     addAudMod (new GainMod (1.0));
@@ -81,5 +60,3 @@ void Master::createModules() {
     addAudConexion(modulo1_0,modulo2_1);
     addAudConexion(modulo2_0, salida0);
     addAudConexion(modulo2_0, salida1);
-}
-

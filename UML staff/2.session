@@ -1,0 +1,15 @@
+window_sizes 1920 1027 450 1465 875 104
+
+diagrams
+  active  classdiagram_ref 128002 // Diagrama de clases
+    1465 875 100 C 0 0
+  sequencediagram_ref 128130 // Diagrama de secuencias
+    114 86 100 A4 0 0
+end
+show_stereotypes
+selected classdiagram_ref 128002 // Diagrama de clases
+open
+  class_ref 129538 // Boton
+  classview_ref 129026 // UML general
+end
+end

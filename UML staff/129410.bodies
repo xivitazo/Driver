@@ -1,13 +1,9 @@
-
-#include "MatrixMod.h"
-
-void MatrixMod::getPos() {
+class MatrixMod
+!!!138114.cpp!!!	getPos(inout x : int, inout y : int) : void
 
     x=posicion[0];
     y=posicion[1];
-}
-
-void MatrixMod::readSerial() {
+!!!138242.cpp!!!	readSerial(in link : int, in mensaje : float) : void
 
     if (link >=nOutLinks)
         return;
@@ -17,18 +13,7 @@ void MatrixMod::readSerial() {
     serial_in(link,mensaje);
     linkReady[link]=1;
     pthread_mutex_unlock(&mtx);
-}
-
-//int MatrixMod::addInputLink(AudioMod *Mod, int nAudLink, int nMatrLink)
-//{
-//if (nMatrLink>=nInputLinks && Mod->getNLinks()>=nAudLink)
-//return -1;
-//inputLinks.push_back(new Link(Mod,nAudLink));
-//return true;
-//
-//}
-
-float MatrixMod::getLink(int link) {
+!!!138370.cpp!!!	getLink(in link : int) : float
 
     if (link>=nOutLinks)
         return -1;
@@ -38,18 +23,14 @@ float MatrixMod::getLink(int link) {
     linkReady[link]=0;
     pthread_mutex_unlock(&mtx);
     return val;
-}
-
-void MatrixMod::setLink() {
+!!!138498.cpp!!!	setLink(in link : int, in val : float) : void
 
     if (link>=nInLinks)
         return;
     pthread_mutex_lock(&mtx);
      in_link(link,val);
     pthread_mutex_unlock(&mtx);
-}
-
-int MatrixMod::updateLink() {
+!!!138626.cpp!!!	updateLink(in nlink : int, in value : float) : int
 
     if (nlink>=nInLinks && linkReady[nlink]==0)
         return -1;
@@ -58,12 +39,8 @@ int MatrixMod::updateLink() {
     in_link(nlink,value);
     pthread_mutex_unlock(&mtx);
     return true;
-}
-
-bool MatrixMod::isLinkReady() {
+!!!138754.cpp!!!	isLinkReady(in nlink : int) : bool
 
     if (nlink>=nOutLinks)
         return false;
     return linkReady[nlink];
-}
-

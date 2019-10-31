@@ -1,25 +1,14 @@
-
-#include "Audio.h"
-#include "AudioMod.h"
-#include "conexion.h"
-
-Audio::Audio(int ninputs, int noutputs):
-    ninputs(ninputs),
-    noutputs(noutputs)
-{
+class Audio
+!!!131970.cpp!!!	Audio(in ninputs : int, in noutputs : int)
 
     output.setNumChannels(2*noutputs);
-}
-
-Audio::~Audio() {
+!!!132098.cpp!!!	~Audio()
 
     for (int n=0;n<modulos.size();n++)
         delete modulos[n];
     for (int n=0;n<conexiones.size();n++)
         delete conexiones[n];
-}
-
-int Audio::processInput() {
+!!!132226.cpp!!!	processInput(inout input : ofSoundBuffer) : int
 
     std::vector <ofSoundBuffer*> inputs;
 
@@ -162,30 +151,22 @@ int Audio::processInput() {
         delete inputs[n];
     }
     return true;
-}
-
-int Audio::getOutput() {
+!!!132354.cpp!!!	getOutput(inout output : ofSoundBuffer) : int
 
     if (!isOutReady())
         return -1;
     output=this->output;
     return true;
-}
-
-int Audio::addModulo() {
+!!!132482.cpp!!!	addModulo(inout modulo : AudioMod) : int
 
     modulos.push_back(modulo);
     return modulos.size()-1;
-}
-
-AudioMod Audio::getModulo() {
+!!!132738.cpp!!!	getModulo(in pos : int) : AudioMod
 
     if (pos>=modulos.size())
         return 0;
     return modulos[pos];
-}
-
-bool Audio::isOutReady() {
+!!!132866.cpp!!!	isOutReady() : bool
 
     /*for (int n=0;n<noutputs;n++)
         if(out_ready[n]==0)
@@ -194,5 +175,3 @@ bool Audio::isOutReady() {
         if (conexiones[n]->output[0]==-2 && conexiones[n]->done==0)
             return false;
     return true;
-}
-

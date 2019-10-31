@@ -1,0 +1,106 @@
+class ofApp
+!!!128002.cpp!!!	setup() : void
+
+
+    //soundcardIN = "MAYA44";
+
+    soundcardIN = "MAYA44";
+    soundcardOUT="MAYA44";
+    nInput = 4;
+    nOutput = 4;
+    mat_port="/dev/ttyACM0";
+    baud=115200;
+
+    soundStream.printDeviceList();
+
+    ofSoundStreamSettings settings;
+
+
+    //Inicializacion de Audio para Linux mediante nombre
+
+    auto device1 = soundStream.getMatchingDevices(soundcardIN);
+    auto device2 = soundStream.getMatchingDevices(soundcardOUT);
+
+    if (!device1.empty()){
+        settings.setInDevice(device1[0]);
+    }
+    if (!device2.empty()){
+        settings.setOutDevice(device2[0]);
+    }
+    settings.numOutputChannels = nOutput;
+    settings.numInputChannels = nInput;
+    settings.setInListener(this);
+    settings.setOutListener(this);
+    int bufferSize = soundStream.getBufferSize();
+     //mixer = new Mixer(nInput/2, nOutput/2, 44100,bufferSize);
+
+
+   // auto devices = soundStream.getDeviceList();
+    //settings.device = devices[4];
+   /* settings.setInDevice(devices[0]);
+    settings.setOutDevice(devices[0]);*/
+
+
+    master=new Master (nInput/2,nOutput/2, mat_port, baud);
+     //int fd;
+     /*fd=open("var/Mixer.txt", O_RDWR, 0777);
+     ftruncate(fd,sizeof(Mixer));
+     mixer = (Mixer *)mmap(NULL, sizeof(Mixer), PROT_READ | PROT_WRITE,MAP_SHARED,fd,0);*/
+
+
+
+
+     soundStream.setup(settings);
+
+
+!!!128130.cpp!!!	update() : void
+
+    master->update();
+!!!128258.cpp!!!	draw() : void
+
+	
+	
+		
+!!!128386.cpp!!!	keyPressed(in key : int) : void
+
+	
+!!!128514.cpp!!!	keyReleased(in key : int) : void
+
+
+!!!128642.cpp!!!	mouseMoved(in x : int, in y : int) : void
+
+!!!128770.cpp!!!	mouseDragged(in x : int, in y : int, in button : int) : void
+
+!!!128898.cpp!!!	mousePressed(in x : int, in y : int, in button : int) : void
+
+!!!129026.cpp!!!	mouseReleased(in x : int, in y : int, in button : int) : void
+
+!!!129154.cpp!!!	mouseEntered(in x : int, in y : int) : void
+
+
+!!!129282.cpp!!!	mouseExited(in x : int, in y : int) : void
+
+
+!!!129410.cpp!!!	windowResized(in w : int, in h : int) : void
+
+
+!!!129538.cpp!!!	dragEvent(in dragInfo : ofDragInfo) : void
+ 
+
+!!!129666.cpp!!!	gotMessage(in msg : ofMessage) : void
+
+
+!!!129794.cpp!!!	~ofApp()
+
+
+!!!129922.cpp!!!	audioIn(inout input : ofSoundBuffer) : void
+
+
+    master->processInput(input);
+	
+!!!130050.cpp!!!	audioOut(inout output : ofSoundBuffer) : void
+
+
+
+    master->getOutput(output);
+	

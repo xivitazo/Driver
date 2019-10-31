@@ -1,8 +1,5 @@
-
-#include "Matriz.h"
-#include "MatrixMod.h"
-
-void Matriz::onNewMessage() {
+class Matriz
+!!!139010.cpp!!!	onNewMessage(inout mensaje : string) : void
 
     int x,y;
     int val;
@@ -46,9 +43,7 @@ void Matriz::onNewMessage() {
         pos[1]=y;
         modulos.push_back(new Potenciometro(pos,f_val, KNOB));
     }
-}
-
-void Matriz::readSerial() {
+!!!139138.cpp!!!	readSerial(in delay : __useconds_t) : void
 
     serial.writeByte('r');
     int nread;
@@ -65,9 +60,7 @@ void Matriz::readSerial() {
 
         }while(!buff.isLastLine());
     }
-}
-
-Matriz::Matriz() {
+!!!139266.cpp!!!	Matriz(in port : string, in baud : int, in xmax : int, in ymax : int)
 
     tam[0]=xmax;
     tam[1]=ymax;
@@ -84,16 +77,12 @@ Matriz::Matriz() {
     readSerial(500000);
     //usleep(1000000);
 
-}
-
-Matriz::Matriz() {
+!!!139394.cpp!!!	Matriz(in xmax : int, in ymax : int)
 
     tam[0]=xmax;
     tam[1]=ymax;
     //pthread_mutex_init(&mtx, NULL);
-}
-
-void Matriz::setup() {
+!!!139522.cpp!!!	setup(inout port : char, in baud : int) : void
 
 
 
@@ -102,9 +91,7 @@ void Matriz::setup() {
     //serial.startContinuousRead();
     //ofAddListener(serial.NEW_MESSAGE,this,&Matriz::onNewMessage);
     //pthread_mutex_unlock(&mtx);
-}
-
-void Matriz::update() {
+!!!139650.cpp!!!	update() : void
 
 
     readSerial(100);
@@ -134,10 +121,7 @@ void Matriz::update() {
         }
     }*/
     //pthread_mutex_unlock(&mtx);
-}
-
-//int addLink(int pos[], AudioMod *Link, int nAudlink, int nMatrlink);
-MatrixMod Matriz::getModulo() {
+!!!139778.cpp!!!	getModulo(in x : int, in y : int) : MatrixMod
 
     for (int n=0; n<modulos.size();n++)
     {
@@ -147,5 +131,3 @@ MatrixMod Matriz::getModulo() {
             return modulos[n];
     }
     return 0;
-}
-

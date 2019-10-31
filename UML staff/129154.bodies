@@ -1,7 +1,5 @@
-
-#include "MixerMod.h"
-
-void MixerMod::process() {
+class MixerMod
+!!!135938.cpp!!!	process() : void
 
 
     if(ch_gain)
@@ -45,9 +43,7 @@ void MixerMod::process() {
         }
     }
 
-}
-
-void MixerMod::update() {
+!!!136066.cpp!!!	update(in nlink : int, in val : float) : void
 
     if(ch_gain && crossfader)
     {
@@ -64,14 +60,6 @@ void MixerMod::update() {
         gain[nlink]=val;
     else if(crossfader)
         ch_fader[ninputs]=(int)val;
-}
-
-MixerMod::MixerMod(int ninputs, bool ch_gain, bool crossfader):
-    ch_gain(ch_gain),
-    crossfader(crossfader),
-    AudioMod(ninputs,1,ninputs*ch_gain+ninputs*crossfader, 0)
-{
+!!!136194.cpp!!!	MixerMod(in ninputs : int, in ch_gain : bool = 0, in crossfader : bool = 0)
 
     ch_fader.assign(ninputs,0);
-}
-

@@ -1,0 +1,78 @@
+format 222
+
+classinstance 128002 class_ref 128002 // ofApp
+  name ""   xyz 20 4 2000 life_line_z 2000
+classinstance 128130 class_ref 128258 // Master
+  name ""   xyz 101 5 2000 life_line_z 2000
+classinstance 128770 class_ref 128514 // LinkStack
+  name ""   xyz 162 4 2000 life_line_z 2000
+classinstance 128898 class_ref 129282 // Link
+  name ""   xyz 239 4 2005 life_line_z 2000
+classinstance 129026 class_ref 128386 // Audio
+  name ""   xyz 299 4 2000 life_line_z 2000
+classinstance 129154 class_ref 128770 // AudioMod
+  name ""   xyz 357 4 2000 life_line_z 2000
+classinstance 129282 class_ref 128642 // Matriz
+  name ""   xyz 430 4 2000 life_line_z 2000
+classinstance 129410 class_ref 129410 // MatrixMod
+  name ""   xyz 489 4 2000 life_line_z 2000
+durationcanvas 128258 classinstance_ref 128002 // :ofApp
+  xyzwh 39 81 2010 11 152
+end
+durationcanvas 128386 classinstance_ref 128130 // :Master
+  xyzwh 120 81 2010 11 143
+end
+durationcanvas 129922 classinstance_ref 129282 // :Matriz
+  xyzwh 449 91 2010 11 31
+end
+durationcanvas 130306 classinstance_ref 129026 // :Audio
+  xyzwh 318 126 2010 11 30
+end
+durationcanvas 130690 classinstance_ref 128770 // :LinkStack
+  xyzwh 187 168 2010 11 31
+end
+msg 128514 synchronous
+  from durationcanvas_ref 128258
+  to durationcanvas_ref 128386
+  yz 81 2015 msg operation_ref 130434 // "Master(in ninputs : int, in noutputs : int, in mat_port : string, in baud : int)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 66 69
+msg 130050 synchronous
+  from durationcanvas_ref 128386
+  to durationcanvas_ref 129922
+  yz 91 2015 msg operation_ref 139266 // "Matriz(in port : string, in baud : int, in xmax : int, in ymax : int)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 272 77
+msg 130178 return
+  from durationcanvas_ref 129922
+  to durationcanvas_ref 128386
+  yz 111 2020 unspecifiedmsg
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+msg 130434 synchronous
+  from durationcanvas_ref 128386
+  to durationcanvas_ref 130306
+  yz 126 2025 msg operation_ref 131970 // "Audio(in ninputs : int, in noutputs : int)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 206 112
+msg 130562 return
+  from durationcanvas_ref 130306
+  to durationcanvas_ref 128386
+  yz 145 2015 unspecifiedmsg
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+msg 130818 synchronous
+  from durationcanvas_ref 128386
+  to durationcanvas_ref 130690
+  yz 168 2015 msg operation_ref 136706 // "LinkStack()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 132 154
+msg 130946 return
+  from durationcanvas_ref 130690
+  to durationcanvas_ref 128386
+  yz 188 2020 unspecifiedmsg
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+msg 131074 return
+  from durationcanvas_ref 128386
+  to durationcanvas_ref 128258
+  yz 213 2015 unspecifiedmsg
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+end

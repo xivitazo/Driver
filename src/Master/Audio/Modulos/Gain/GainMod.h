@@ -1,16 +1,22 @@
-#ifndef GAIN_H
-#define GAIN_H
-#include "../AudioMod.h"
+#ifndef _GAINMOD_H
+#define _GAINMOD_H
 
-class GainMod: public AudioMod
-{
+
+#include "AudioMod.h"
+
+class GainMod : public AudioMod {
+  private:
     float gain;
+
     virtual void process();
+
     virtual void update(int nlink, float val);
-    virtual void  in_link (int link, float value);
-public:
+
+    virtual void in_link(int link, float value);
+
+
+  public:
     GainMod(float gain);
 
 };
-
-#endif // GAIN_H
+#endif

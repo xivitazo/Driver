@@ -1,0 +1,13 @@
+class GainMod
+!!!135426.cpp!!!	process() : void
+
+    outputs=inputs*gain;
+!!!135554.cpp!!!	update(in nlink : int, in val : float) : void
+
+    gain=val;
+!!!135682.cpp!!!	in_link(in link : int, in value : float) : void
+
+    gain=value;
+!!!135810.cpp!!!	GainMod(in gain : float)
+
+

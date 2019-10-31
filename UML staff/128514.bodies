@@ -1,23 +1,14 @@
-
-#include "LinkStack.h"
-#include "Link.h"
-#include "AudioMod.h"
-#include "MatrixMod.h"
-
-LinkStack::LinkStack() {
+class LinkStack
+!!!136706.cpp!!!	LinkStack()
 
 
-}
-
-void LinkStack::update() {
+!!!136834.cpp!!!	update() : void
 
     for(int n=0; n<links.size();n++)
     {
         links[n]->update();
     }
-}
-
-void LinkStack::updateFomAud() {
+!!!136962.cpp!!!	updateFomAud() : void
 
     for(int n=0; n<links.size();n++)
     {
@@ -26,9 +17,7 @@ void LinkStack::updateFomAud() {
             links[n]->update();
         }
     }
-}
-
-void LinkStack::updateFromMatr() {
+!!!137090.cpp!!!	updateFromMatr() : void
 
     for(int n=0; n<links.size();n++)
     {
@@ -37,17 +26,11 @@ void LinkStack::updateFromMatr() {
             links[n]->update();
         }
     }
-}
-
-int LinkStack::addFromAud() {
+!!!137218.cpp!!!	addFromAud(inout fromAud : AudioMod, in nAudLink : int, inout toMatr : MatrixMod, in nMatrLink : int) : int
 
     links.push_back(new Link (fromAud, nAudLink, toMatr,nMatrLink, true));
     return true;
-}
-
-int LinkStack::addFromMatr() {
+!!!137346.cpp!!!	addFromMatr(inout fromMatr : MatrixMod, in nMatrLink : int, inout toAud : AudioMod, in nAudLink : int) : int
 
     links.push_back((new Link (toAud,nAudLink,fromMatr,nMatrLink,false)));
     return true;
-}
-

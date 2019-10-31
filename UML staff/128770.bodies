@@ -1,7 +1,5 @@
-
-#include "AudioMod.h"
-
-bool AudioMod::noMtxOutReady() {
+class AudioMod
+!!!133122.cpp!!!	noMtxOutReady() : bool
 
     for (int n=0;n<ninputs;n++)
         if(input_lock[n]==0)
@@ -10,14 +8,7 @@ bool AudioMod::noMtxOutReady() {
             return 0;
         }
     return 1;
-}
-
-AudioMod::AudioMod(int ninputs, int noutputs, int nInLinks, int nOutLinks):
-    ninputs(ninputs),
-    noutputs(noutputs),
-    nInLinks(nInLinks),
-    nOutLinks(nOutLinks)
-{
+!!!133250.cpp!!!	AudioMod(in ninputs : int, in noutputs : int, in nInLinks : int, in nOutLinks : int)
 
     pthread_mutex_init(&mtx,NULL);
     pthread_mutex_lock(&mtx);
@@ -28,22 +19,7 @@ AudioMod::AudioMod(int ninputs, int noutputs, int nInLinks, int nOutLinks):
     linkReady.assign(nOutLinks,1);
 
     pthread_mutex_unlock(&mtx);
-}
-
-//int Modulo::getNext(std::vector<int[2]> &next)
-//{
-//for (int n=0;n<this->next.size();n++)
-//{
-//next[n][0]=this->next[n][0];
-//next[n][1]=this->next[n][1];
-//}
-//if (!isOutReady())
-//return 0;
-//return 1;
-//}
-//
-
-int AudioMod::processInput(ofSoundBuffer inputs) {
+!!!133762.cpp!!!	processInput(in inputs : ofSoundBuffer) : int
 
     if (inputs.getNumChannels()!=2*ninputs)
         return -1;
@@ -53,13 +29,7 @@ int AudioMod::processInput(ofSoundBuffer inputs) {
     pthread_mutex_unlock(&mtx);
     return true;
 
-}
-
-//Añade la entrada ninput y si puede procesa el audio
-//-1 error
-//0 valor correcto pero módulo no listo para output
-//>0 procesado y listo para output
-int AudioMod::processInput() {
+!!!133890.cpp!!!	processInput(in ninput : int, in input : ofSoundBuffer) : int
 
     if(ninput>=ninputs || input.getNumChannels()!=2 ||input_lock[ninput]==1)
         return -1;
@@ -81,9 +51,7 @@ int AudioMod::processInput() {
        pthread_mutex_unlock(&mtx);
        return 0;
    }
-}
-
-int AudioMod::getOutput() {
+!!!134018.cpp!!!	getOutput(inout output : ofSoundBuffer) : int
 
     if (!isOutReady())
         return -1;
@@ -91,9 +59,7 @@ int AudioMod::getOutput() {
     output=outputs;
     pthread_mutex_unlock(&mtx);
     return true;
-}
-
-int AudioMod::getOutput() {
+!!!134146.cpp!!!	getOutput(inout output : ofSoundBuffer, in noutput : int) : int
 
     if (noutput>=noutputs || !isOutReady())
         return -1;
@@ -107,9 +73,7 @@ int AudioMod::getOutput() {
     output.setChannel(right,1);
     pthread_mutex_unlock(&mtx);
     return true;
-}
-
-void AudioMod::resetBuff() {
+!!!134530.cpp!!!	resetBuff(in numSamples : int) : void
 
     pthread_mutex_lock(&mtx);
     outputs.allocate(numSamples, 2*noutputs);
@@ -119,9 +83,7 @@ void AudioMod::resetBuff() {
     inputs.set(0);
     input_lock.assign(ninputs,NULL);
     pthread_mutex_unlock(&mtx);
-}
-
-bool AudioMod::isOutReady() {
+!!!134658.cpp!!!	isOutReady() : bool
 
     pthread_mutex_lock(&mtx);
     for (int n=0;n<ninputs;n++)
@@ -132,9 +94,7 @@ bool AudioMod::isOutReady() {
         }
     pthread_mutex_unlock(&mtx);
     return 1;
-}
-
-int AudioMod::updateLink() {
+!!!134786.cpp!!!	updateLink(in nlink : int, in val : float) : int
 
     if (nlink>=nInLinks)
         return -1;
@@ -142,9 +102,7 @@ int AudioMod::updateLink() {
     in_link(nlink,val);
     pthread_mutex_unlock(&mtx);
     return true;
-}
-
-float AudioMod::getLink() {
+!!!135042.cpp!!!	getLink(in nlink : int) : float
 
     if (nlink >= nOutLinks)
         return -1;
@@ -153,9 +111,7 @@ float AudioMod::getLink() {
     linkReady[nlink]=0;
     pthread_mutex_unlock(&mtx);
     return val;
-}
-
-bool AudioMod::isLinkReady() {
+!!!135298.cpp!!!	isLinkReady(in nlink : int) : bool
 
     if (nlink>=nOutLinks)
         return false;
@@ -163,5 +119,3 @@ bool AudioMod::isLinkReady() {
     int val= linkReady[nlink];
     pthread_mutex_unlock(&mtx);
     return val;
-}
-

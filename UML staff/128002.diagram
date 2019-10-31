@@ -1,0 +1,113 @@
+format 222
+
+classcanvas 128002 class_ref 128002 // ofApp
+  classdiagramsettings member_max_width 0 end
+  xyz 573.25 -17 2000
+end
+classcanvas 128130 class_ref 128258 // Master
+  classdiagramsettings member_max_width 0 end
+  xyz 571.25 466.6 3005
+end
+classcanvas 128386 class_ref 128514 // LinkStack
+  classdiagramsettings member_max_width 0 end
+  xyz 573.25 766.6 3011
+end
+classcanvas 128642 class_ref 129282 // Link
+  classdiagramsettings member_max_width 0 end
+  xyz 583.6 979.6 3017
+end
+classcanvas 128898 class_ref 128642 // Matriz
+  classdiagramsettings member_max_width 0 end
+  xyz 778.05 477.5 3011
+end
+classcanvas 129154 class_ref 129410 // MatrixMod
+  classdiagramsettings member_max_width 0 end
+  xyz 788.6 756.7 3023
+end
+classcanvas 129538 class_ref 128386 // Audio
+  classdiagramsettings member_max_width 0 end
+  xyz 391.15 461.6 3011
+end
+classcanvas 129794 class_ref 128770 // AudioMod
+  classdiagramsettings member_max_width 0 end
+  xyz 395.2 691.8 3023
+end
+classcanvas 130434 class_ref 129026 // GainMod
+  classdiagramsettings member_max_width 0 end
+  xyz 192.7 867.8 3029
+end
+classcanvas 130690 class_ref 129794 // Potenciometro
+  classdiagramsettings member_max_width 0 end
+  xyz 935.6 844.7 3029
+end
+classcanvas 132098 class_ref 128898 // Conexion
+  classdiagramsettings member_max_width 0 end
+  xyz 230.2 525 3017
+end
+relationcanvas 128258 relation_ref 128130 // <unidirectional association>
+  decenter_begin 535
+  decenter_end 532
+  from ref 128002 z 3006 to ref 128130
+  role_a_pos 642 466 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 128386 // <directional composition>
+  decenter_begin 532
+  decenter_end 555
+  from ref 128130 z 3012 to ref 128386
+  role_a_pos 645 759 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 129410 // <unidirectional association>
+  from ref 128386 z 3018 stereotype "<<:vector>>" xyz 589 942 3018 to ref 128642
+  role_a_pos 640 971 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 128514 // <unidirectional association>
+  decenter_end 463
+  from ref 128130 z 3012 to ref 128898
+  role_a_pos 726 549 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 129282 // <unidirectional association>
+  from ref 128642 z 3024 to ref 129154
+  role_a_pos 728 897 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 129794 // <unidirectional association>
+  from ref 128898 z 3024 stereotype "<<:vector>>" xyz 797.5 707.5 3024 to ref 129154
+  role_a_pos 846 761 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 128258 // <unidirectional association>
+  from ref 128130 z 3012 to ref 129538
+  role_a_pos 518 554 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129922 relation_ref 129154 // <unidirectional association>
+  from ref 128642 z 3024 to ref 129794
+  role_a_pos 512 947 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 128642 // <unidirectional association>
+  decenter_begin 456
+  from ref 129538 z 3024 stereotype "<<:vector>>" xyz 420 729.5 3024 to ref 129794
+  role_a_pos 458 711 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130562 relation_ref 128898 // <generalisation>
+  from ref 130434 z 3030 to ref 129794
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130818 relation_ref 129922 // <generalisation>
+  from ref 130690 z 3030 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132226 relation_ref 128770 // <unidirectional association>
+  from ref 129538 z 3018 stereotype "<<:vector>>" xyz 310.5 567.5 3018 to ref 132098
+  role_a_pos 315 554 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end
