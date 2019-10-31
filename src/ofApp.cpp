@@ -5,7 +5,7 @@
 #include <sys/mman.h> //para mmap
 #include <fstream> //para open
 #include <fcntl.h> //para O_RDWR
-#include "Master/Modulos/AllAudioMod.h"
+#include "Master/Audio/Modulos/AllAudioMod.h"
 
 
 
