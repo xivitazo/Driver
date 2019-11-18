@@ -70,12 +70,11 @@ void ofApp::update() {
 
 //--------------------------------------------------------------
 
-void ofApp::draw() {
-
+/*void ofApp::draw(){
 	
 	
 		
-}
+}*/
 
 //--------------------------------------------------------------
 
@@ -105,7 +104,7 @@ void ofApp::mouseDragged(int x, int y, int button) {
 
 //--------------------------------------------------------------
 
-void ofApp::mousePressed(int x, int y, int button) {
+/*void ofApp::mouseMoved(int x, int y ){
 
 }
 
@@ -148,7 +147,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo) {
 void ofApp::gotMessage(ofMessage msg) {
 
 
-}
+}*/
 
 ofApp::~ofApp() {
 
@@ -172,5 +171,10 @@ void ofApp::audioOut(ofSoundBuffer & output) {
 
     master->getOutput(output);
 	
+
+}
+
+ofApp :: ~ofApp(){
+    delete master;
 }
 
