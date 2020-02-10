@@ -15,11 +15,11 @@ Link::Link(AudioMod *audLink, int audNLink, MatrixMod *matLink, int matNLink, bo
          return;
      if (fromAud)
      {
-         float val=audLink->getLink(audNLink);
+         float val=2*audLink->getLink(audNLink);
          matLink->updateLink(matNLink, val);
          return;
      }
-     float val=matLink->getLink(matNLink);
+     float val=2*matLink->getLink(matNLink);
      audLink->updateLink(audNLink, val);
  }
 

@@ -76,9 +76,12 @@ int Master::addAudConexion(int input[2], int output[2])
 
 void Master::createLinks()
 {
-    int pos[2]={1,4};
+    int pos[2]={1,3};
 
     addLinkFromMatr(pos[0], pos[1],0,0,0);
+    pos[0]=3;
+    pos [1]=3;
+    addLinkFromMatr(pos[0], pos[1],1,0,0);
 }
 
 void Master::createModules ()
