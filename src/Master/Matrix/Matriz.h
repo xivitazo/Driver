@@ -19,6 +19,7 @@ class Matriz
 public:
     Matriz(string port, int baud, int xmax, int ymax);
     Matriz(int xmax, int ymax);
+    ~Matriz();
     void setup (char* port, int baud);
     void update();
     //int addLink(int pos[], AudioMod *Link, int nAudlink, int nMatrlink);

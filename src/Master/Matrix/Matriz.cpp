@@ -28,6 +28,11 @@ Matriz::Matriz(int xmax, int ymax)
     tam[1]=ymax;
     //pthread_mutex_init(&mtx, NULL);
 }
+Matriz::~Matriz()
+{
+    for (int n=0;n<modulos.size();n++)
+        delete modulos[n];
+}
 
 void Matriz::onNewMessage (string & mensaje)
 {

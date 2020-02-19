@@ -79,6 +79,7 @@ void Master::createLinks()
     int pos[2]={1,4};
 
     addLinkFromMatr(pos[0], pos[1],0,0,0);
+    addLinkFromMatr(1,2,3,0,0);
 }
 
 void Master::createModules ()
@@ -86,6 +87,7 @@ void Master::createModules ()
     addAudMod (new GainMod (1.0));
     addAudMod (new GainMod (1.0));
     addAudMod (new MixerMod (2));
+    addAudMod(new FilterMod(FILTER_MODE_LOWPASS));
 
     //int conexion1[2]={-1,0}, conexion2[2]={0,0}, conexion3[2]={-2,0};
 
@@ -93,9 +95,11 @@ void Master::createModules ()
     int salida0[2]={-2,0}, salida1[2]={-2,1};
     int modulo0_0[2]={0,0}, modulo1_0[2]={1,0};
     int modulo2_0[2]={2,0}, modulo2_1[2]={2,1};
+    int modulo3_0[2]={3,0};
 
     addAudConexion(entrada0, modulo0_0);
-    addAudConexion(modulo0_0,modulo2_0);
+    addAudConexion(modulo0_0,modulo3_0);
+    addAudConexion(modulo3_0,modulo2_0);
     addAudConexion(entrada1, modulo1_0);
     addAudConexion(modulo1_0,modulo2_1);
     addAudConexion(modulo2_0, salida0);
