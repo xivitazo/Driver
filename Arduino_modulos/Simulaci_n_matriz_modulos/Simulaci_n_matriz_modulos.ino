@@ -10,32 +10,31 @@ const int highestPin = 15;
 typedef struct
 {
   int pos[2];
-  int  varLP, varLP_new;
-  FilterOnePole lowpass;
+  int  varLP;
   int diff_new;
 
   void setup()
   {
       varLP=0;
-      varLP_new=0;
-      lowpass.setFilter(LOWPASS, 1/(2*pi/filterFrequency),0.0);
+      //varLP_new=0;
+      //lowpass.setFilter(LOWPASS, 1/(2*pi/filterFrequency),0.0);
   }
   
   void procesar (int var)
   {
-    lowpass.input(var);
-    varLP_new=lowpass.output();
-     diff_new=abs(varLP_new - varLP);
+    //lowpass.input(var);
+    //varLP_new=lowpass.output();
+     diff_new=abs(varLP - var);
     if (diff_new>diff)
     {
-      varLP=varLP_new;
+      varLP=var;
       printValue();
     }
   }
   void printValue()
   {
     Serial.print(pos[0]);
-    Serial.print(" ");
+    Serial.print(",");
     Serial.print(pos[1]);
     Serial.print(",");
     Serial.println(varLP);
@@ -98,6 +97,19 @@ void setup() {
    
   }
   inicializarPosiciones();
+  int var;
+  for (int i=lowestPin; i<highestPin+1; i++)
+    {
+      if (i==4){
+        continue;
+      }
+      var=analogRead(i);
+      modulos[i].procesar(var);
+      modulos[i].printValue();
+      //modulos[i].lowpass.print();
+      //delay (10);
+    }
+    
   /*for (int i=lowestPin; i<highestPin+1; i++)
     {
       if (i==4)
