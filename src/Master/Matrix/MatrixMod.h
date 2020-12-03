@@ -33,7 +33,7 @@ protected:
     virtual void serial_in (int link,float mensaje){}
 
 public:
-    bool change;
+    //bool change;
     void getPos(int &x, int&y);
     void readSerial (int link, float mensaje);
 
