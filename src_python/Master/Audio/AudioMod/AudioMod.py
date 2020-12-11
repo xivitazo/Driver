@@ -1,18 +1,17 @@
 from threading import  Lock, Event
 import numpy as np
+from .BaseMod import BaseMod
 
-class AudioMod :
-
-    def __init__ (self, ninputs: int, noutputs : int, nInlinks : int, nOutLinks : int):
+class AudioMod (BaseMod) :
+    
+    def __init__ (self, ninputs : int , noutputs : int, nInlinks : int, nOutLinks:int):
+         
+        BaseMod.__init__ (self,nInlinks, nOutLinks)
         self.ninputs=ninputs
         self.noutputs=noutputs
-        self.nInlinks=nInlinks
-        self.nOutLinks=nOutLinks
         self.inputLock=np.zeros([ninputs],bool)
-        self.mtx=Lock()
         self.outputBuff=np.empty([0,2*self.noutputs])
         self.inputBuff=np.empty([0,2*self.noutputs])
-        self.eventThread=Event()
 
     #Procesa todas las entradas guardadas en el buffer que tendra que tener el tamaño adecuado
     #-1 error
@@ -40,7 +39,7 @@ class AudioMod :
                 e.set()
             return -1
         self.inputLock[ninput]=1
-        self.inputBuff[:,2*ninput:2*ninput+2]=input
+        self.inputBuff[:,2*ninput:2*ninput+2]=input[:,:]
         for x in self.inputLock :
             if x == 0:
                 self.mtx.release()
@@ -69,11 +68,13 @@ class AudioMod :
         self.mtx.acquire()
         self.outputBuff.resize(numSamples, 2*self.noutputs)
         self.inputBuff.resize(numSamples, 2*self.ninputs)
+        self.outputBuff[:,:]=0
+        self.inputBuff[:,:]=0
         self.inputLock[:]=0
         self.mtx.release()
     def process (self):
         if self.ninputs == self.noutputs :
-            self.outputBuff [:] =self.inputBuff
+            self.outputBuff [:,:] =self.inputBuff[:,:]
     def isOutReady (self):
         self.mtx.acquire()
         for x in self.inputLock :
@@ -82,13 +83,3 @@ class AudioMod :
                 return False
         self.mtx.release()
         return True
-
-  #  def updateLink (nlink : int , val)
-  #  def getNInLinks ()
-  #  def getLink(nlink : int)
-  #  def getNoutLinks ()
-  #  def isLinkReady (nlink : int)
-
-
-
-    
